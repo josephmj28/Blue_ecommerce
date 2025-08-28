@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Spring eCommerce — Admin</title>
+
+    <!-- CSS base (navbar, footer, layout) -->
+    <link rel="stylesheet" th:href="@{/css/admin-base.css}" />
+    <!-- CSS específico del home (jumbotron, grid, cards) -->
+    <link rel="stylesheet" th:href="@{/css/admin-home.css}" />
+</head>
+<body>
+
+<!-- Header -->
+<div th:include="administrador/template_admin.html::header"></div>
+
+<!-- Contenido -->
+<main class="container">
+    <!-- Jumbotron -->
+    <header class="jumbotron">
+        <h1>Bienvenido a Spring Ecommerce 2025</h1>
+        <p>Tu tienda de productos en Línea</p>
+    </header>
+
+    <!-- Grid de productos -->
+    <section class="grid">
+        <article class="card" th:each="producto : ${productos}">
+            <div class="card-body">
+                <p class="card-title" th:text="${producto.nombre}">Nombre del producto</p>
+            </div>
+            <div class="card-footer">
+                <!-- Ajusta esta ruta si tu detalle es distinto -->
+                <a class="btn" th:href="@{/productos/{id}(id=${producto.id})}">Ver producto</a>
+            </div>
+        </article>
+    </section>
+</main>
+
+<!-- Footer -->
+<div th:include="administrador/template_admin.html::footer"></div>
+</body>
+</html>

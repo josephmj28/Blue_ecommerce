@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spring eCommerce - Productos</title>
+
+    <!-- Estilos propios -->
+    <link rel="stylesheet" th:href="@{/css/show.css}">
+    <link rel="stylesheet" th:href="@{/css/admin-base.css}" />
+</head>
+
+<body>
+
+<!-- Header -->
+<nav class="nav">
+    <form class="nav-search" method="post" action="#">
+        <input type="search" name="nombre" placeholder="Buscar..." autocomplete="off" />
+        <button type="submit">Buscar</button>
+    </form>
+
+    <div class="nav-dropdown">
+        <button class="dropbtn">ADMIN ▼</button>
+        <div class="dropdown-content">
+            <a th:href="@{/productos}">Productos</a>
+            <a href="#">Cerrar sesión</a>
+
+        </div>
+    </div>
+</nav>
+</div>
+
+<!-- Contenido principal -->
+<main class="contenido">
+    <h1>Spring eCommerce <small>Productos</small></h1>
+
+    <nav class="breadcrumb">
+        <a th:href="@{/administrador}">Home</a> /
+        <span>Ver Productos</span>
+    </nav>
+
+    <a class="btn btn-primary" th:href="@{/productos/create}">+ Crear Producto</a>
+
+    <h2>Listado de Productos</h2>
+
+    <table class="tabla-productos">
+        <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Inventario</th>
+            <th>Precio</th>
+            <th colspan="2">Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="producto : ${productos}">
+            <td th:text="${producto.nombre}"></td>
+            <td th:text="${producto.descripcion}"></td>
+            <td th:text="${producto.cantidad}"></td>
+            <td th:text="${producto.precio}"></td>
+            <td>
+                <a class="btn btn-warning" th:href="@{/productos/edit/{id}(id=${producto.id})}">Editar</a>
+            </td>
+            <td>
+                <a class="btn btn-danger" th:href="@{/productos/delete/{id}(id=${producto.id})}">Eliminar</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+    <p>Copyright &copy; Spring eCommerce 2025</p>
+</footer>
+
+</body>
+</html>

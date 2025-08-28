@@ -1,0 +1,105 @@
+/* ==== Reset & base ==== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; }
+body { font-family: Arial, sans-serif; background: #f8f9fa; color: #333; }
+
+/* Contenedor general reutilizable */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 100px auto 40px auto; /* 100px por nav fijo */
+}
+
+/* ==== NAVBAR ==== */
+.nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    justify-content: space-between;
+    background: #2d2f31;
+    color: #fff;
+    padding: 12px 20px;
+}
+
+.nav-logo a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* Buscador */
+.nav-search {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    min-width: 260px;
+    max-width: 420px;
+    width: 100%;
+}
+
+.nav-search input {
+    flex: 1;
+    padding: 8px 10px;
+    border: none;
+    border-radius: 6px 0 0 6px;
+    outline: none;
+}
+
+.nav-search button {
+    padding: 8px 14px;
+    background: #198754;
+    color: #fff;
+    border: none;
+    border-radius: 0 6px 6px 0;
+    cursor: pointer;
+}
+.nav-search button:hover { background: #157347; }
+
+/* Dropdown admin (hover) */
+.nav-dropdown { position: relative; }
+.dropbtn {
+    background: #3a3b3c;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    cursor: pointer;
+    border-radius: 6px;
+}
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0; top: calc(100% + 8px);
+    background: #fff;
+    color: #000;
+    min-width: 180px;
+    border-radius: 8px;
+    box-shadow: 0 8px 20px rgba(0,0,0,.15);
+    overflow: hidden;
+}
+.dropdown-content a {
+    display: block;
+    padding: 10px 14px;
+    color: #000;
+    text-decoration: none;
+}
+.dropdown-content a:hover { background: #f2f2f2; }
+.nav-dropdown:hover .dropdown-content { display: block; }
+
+/* ==== FOOTER ==== */
+.footer {
+    background: #2d2f31;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+    margin-top: 40px;
+}
+
+/* ==== Responsive ==== */
+@media (max-width: 800px) {
+    .nav { flex-wrap: wrap; gap: 8px; }
+    .nav-search { order: 3; width: 100%; min-width: 0; }
+}
