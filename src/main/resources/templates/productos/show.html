@@ -13,8 +13,18 @@
 
 <body>
 
+<div id="fondo-animado"></div>
+
 <!-- Header -->
 <nav class="nav">
+    <div class="nav-logo">
+        <a th:href="@{/administrador}">
+            <img th:src="@{/images/imge.png}" alt="logo">
+
+        </a>
+    </div>
+
+
     <form class="nav-search" method="post" action="#">
         <input type="search" name="nombre" placeholder="Buscar..." autocomplete="off" />
         <button type="submit">Buscar</button>
@@ -29,7 +39,7 @@
         </div>
     </div>
 </nav>
-</div>
+
 
 <!-- Contenido principal -->
 <main class="contenido">
@@ -41,6 +51,26 @@
     </nav>
 
     <a class="btn btn-primary" th:href="@{/productos/create}">+ Crear Producto</a>
+
+
+    <div class="csv-dropdown">
+        <button class="btn btn-success">Opciones CSV ▼</button>
+        <div class="csv-dropdown-content">
+
+            <!-- Descargar -->
+            <a class="csv-option" th:href="@{/productos/template}">
+                ⬇️ Descargar plantilla
+            </a>
+
+            <!-- Subir -->
+            <form th:action="@{/productos/upload}" method="post" enctype="multipart/form-data" style="padding:12px 16px;">
+                <input type="file" name="file" id="fileUpload" class="csv-file-input" accept=".csv"/>
+                <label for="fileUpload" class="csv-upload-label">Seleccionar archivo</label>
+                <button type="submit" class="csv-upload-btn">Subir</button>
+            </form>
+        </div>
+    </div>
+
 
     <h2>Listado de Productos</h2>
 
@@ -72,9 +102,13 @@
 </main>
 
 <!-- Footer -->
-<footer class="footer">
-    <p>Copyright &copy; Spring eCommerce 2025</p>
-</footer>
+<div th:include="administrador/template_admin.html::footer"></div>
+
+<script src="/js/vanta-aurora.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vanta/dist/vanta.fog.min.js"></script>
+<script th:src="@{/js/vanta-aurora.js}"></script>
+
 
 </body>
 </html>

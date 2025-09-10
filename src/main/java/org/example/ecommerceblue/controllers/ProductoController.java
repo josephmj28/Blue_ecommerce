@@ -1,19 +1,30 @@
 package org.example.ecommerceblue.controllers;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.example.ecommerceblue.models.Producto;
 import org.example.ecommerceblue.models.Usuario;
+import org.example.ecommerceblue.repository.IProductoRepository;
 import org.example.ecommerceblue.service.IProductoService;
 import org.example.ecommerceblue.service.IUsuarioService;
 import org.example.ecommerceblue.service.UploadFileService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.Optional;
+import org.springframework.http.HttpStatus;
+
+
 
 
 @Controller
@@ -71,7 +82,7 @@ public class ProductoController {
     }
 
     @PostMapping("/update")
-    public String update(Producto producto, @RequestParam("img") MultipartFile file) throws IOException {
+    public String update(Producto producto,  MultipartFile file) throws IOException {
 
         Producto p=new Producto();
         p=productoService.get(producto.getId()).get();
@@ -91,5 +102,69 @@ public class ProductoController {
         productoService.delete(id);
         return "redirect:/productos";
     }
+
+
+    @GetMapping("/template")
+    public void descargarTemplate(HttpServletResponse response) throws IOException {
+        response.setContentType("text/csv");
+        response.setHeader("Content-Disposition", "attachment; filename=plantilla.csv");
+
+        PrintWriter writer = response.getWriter();
+        writer.println("id,nombre,descripcion,cantidad,precio"); // encabezados
+        writer.flush();
+        writer.close();
+    }
+
+    @PostMapping("/upload")
+    public String subirCsv(@RequestParam("file") MultipartFile file, Model model) {
+        if (file.isEmpty()) {
+            model.addAttribute("error", "El archivo está vacío");
+            return "productos/show";
+        }
+
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
+            String line;
+            boolean firstLine = true;
+
+            while ((line = br.readLine()) != null) {
+                if (firstLine) { // Saltar cabecera
+                    firstLine = false;
+                    continue;
+                }
+
+                String[] fields = line.split(",");
+                if (fields.length < 4) {
+                    LOGGER.warn("Fila inválida en CSV: {}", Arrays.toString(fields));
+                    continue;
+                }
+
+                Producto p = new Producto();
+                p.setNombre(fields[0].trim());
+                p.setDescripcion(fields[1].trim());
+                p.setCantidad(Integer.parseInt(fields[2].trim()));
+                p.setPrecio(Double.parseDouble(fields[3].trim()));
+
+
+                Usuario u = new Usuario(1,"","","","","","","");
+                p.setUsuario(u);
+
+                LOGGER.info("Guardando producto desde CSV: {}", p);
+
+                productoService.save(p);
+            }
+
+            return "redirect:/productos";
+
+        } catch (Exception e) {
+            model.addAttribute("error", "Error procesando el archivo: " + e.getMessage());
+            return "productos/show";
+        }
+    }
+
+
+
+
+
+
 }
 
