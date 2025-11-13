@@ -1,43 +1,69 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Bienvenido — Admin</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emprendedor</title>
 
-    <!-- CSS base (navbar, footer, layout) -->
-    <link rel="stylesheet" th:href="@{/css/admin-base.css}" />
-    <!-- CSS específico del home (jumbotron, grid, cards) -->
-    <link rel="stylesheet" th:href="@{/css/admin-home.css}" />
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/emprendedor.css}">
 </head>
 <body>
 
-<!-- Header -->
-<div th:include="administrador/template_admin.html::header"></div>
+<header>
+    <nav>
+        <div class="logo">
+            <a th:href="@{/administrador}">
+                <img th:src="@{/images/Logo (2).png}" alt="logo">
+            </a>
+        </div>
+        <div class="titulo">
+            <h1><span class="yellow">Panel</span> <span class="green">administrador</span></h1>
+        </div>
+        <div class="iconos">
+            <a th:href="@{/login}" class="nav-icon user-icon">
+                <i class="fas fa-user"></i>
+            </a>
+            <button class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+</header>
 
-<!-- Contenido -->
-<main class="container">
-    <!-- Jumbotron -->
-    <header class="jumbotron">
-        <h1>Bienvenido al panel de administrador Bluecore</h1>
-        <p>Aesoría tecnologica</p>
-    </header>
+<section class="background">
 
-    <!-- Grid de productos -->
-    <section class="grid">
-        <article class="card" th:each="producto : ${productos}">
-            <div class="card-body">
-                <p class="card-title" th:text="${producto.nombre}">Nombre del producto</p>
+    <!-- HEADER DEL PANEL -->
+    <div class="header-panel">
+        <div class="bienvenida">
+            <h2>
+                <span class="yellow">¡Bienvenido</span>
+                <span class="green" th:text="${emprendedor != null ? emprendedor.nombre : 'Nombre-Emprendedor'}">Nombre-Emprendedor</span>
+            </h2>
+            <p th:text="${emprendimiento != null ? emprendimiento.nombreNegocio : 'Nombre_Negocio'}">Nombre_Negocio</p>
+        </div>
+        <div class="boton-gestionar">
+            <a class="yellow-a" th:href="@{/productos}">Gestionar negocio</a>
+        </div>
+    </div>
+
+    <!-- AREA DE PRODUCTOS -->
+    <div class="productos-panel">
+        <div class="carts" th:if="${productos != null}">
+            <div class="product-card" th:each="producto:${productos}">
+                <div class="card-body">
+                    <p class="card-text" th:text="${producto.nombre}">Nombre producto</p>
+                </div>
+                <div class="card-footer">
+                    <a href="productohome.html" class="btn-ver-producto">Ver producto</a>
+                </div>
             </div>
-            <div class="card-footer">
-                <!-- Ajusta esta ruta si tu detalle es distinto -->
-                <a class="btn" th:href="@{/productos/{id}(id=${producto.id})}">Ver producto</a>
-            </div>
-        </article>
-    </section>
-</main>
+        </div>
+        <p th:if="${productos == null}" class="no-products">No hay productos registrados</p>
+    </div>
 
-<!-- Footer -->
-<div th:include="administrador/template_admin.html::footer"></div>
+</section>
+
 </body>
 </html>

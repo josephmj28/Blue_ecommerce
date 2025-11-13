@@ -5,76 +5,72 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spring eCommerce - Editar Producto</title>
 
-    <!-- Estilos propios -->
+    <!-- Estilos -->
     <link rel="stylesheet" th:href="@{/css/edit.css}">
-    <link rel="stylesheet" th:href="@{/css/show.css}">
     <link rel="stylesheet" th:href="@{/css/admin-base.css}" />
 </head>
-
 <body>
 
 <!-- Header -->
-<nav class="nav">
-    <div class="nav-logo">
-        <a th:href="@{/administrador}">BlueCore</a>
+<nav>
+    <div class="logo">
+        <a th:href="@{/administrador}">
+            <img th:src="@{/images/Logo (2).png}" alt="logo">
+        </a>
     </div>
-
-    <form class="nav-search" method="post" action="#">
-        <input type="search" name="nombre" placeholder="Buscar..." autocomplete="off" />
-        <button type="submit">Buscar</button>
-    </form>
-
-    <div class="nav-dropdown">
-        <button class="dropbtn">ADMIN ▼</button>
-        <div class="dropdown-content">
-            <a th:href="@{/productos}">Productos</a>
-            <a href="#">Cerrar sesión</a>
-        </div>
+    <div class="titulo">
+        <h1><span class="yellow">Panel</span> <span class="green">administrador</span></h1>
+    </div>
+    <div class="iconos">
+        <a th:href="@{/login}" class="nav-icon user-icon">
+            <i class="fas fa-user"></i>
+        </a>
+        <button class="menu-toggle">
+            <i class="fas fa-bars"></i>
+        </button>
     </div>
 </nav>
 
 <!-- Contenido principal -->
 <main class="contenido">
-    <h1>Spring eCommerce <small>Productos</small></h1>
 
-    <nav class="breadcrumb">
-        <a th:href="@{/administrador}">Home</a> /
-        <span>Actualizar Producto</span>
-    </nav>
+    <!-- CUADRO BLANCO -->
+    <div class="cuadro-blanco">
+        <h1 class="titulo-cuadro">Editar Producto</h1>
 
-    <h2>Editar Producto</h2>
+        <form class="form-producto" th:action="@{/productos/update}" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="id" th:value="${producto.id}" />
 
-    <form class="form-producto" th:action="@{/productos/update}" method="post" enctype="multipart/form-data">
-        <input type="hidden" name="id" th:value="${producto.id}" />
+            <div class="form-group">
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" placeholder="Ingrese el nombre del producto"
+                       required autocomplete="off" th:value="${producto.nombre}" />
+            </div>
 
-        <div class="form-group">
-            <label for="nombre">Nombre:</label>
-            <input type="text" id="nombre" name="nombre" placeholder="Ingrese el nombre del producto"
-                   required autocomplete="off" th:value="${producto.nombre}" />
-        </div>
+            <div class="form-group">
+                <label for="descripcion">Descripción:</label>
+                <textarea id="descripcion" name="descripcion" placeholder="Ingrese la descripción del producto"
+                          required autocomplete="off" th:text="${producto.descripcion}"></textarea>
+            </div>
 
-        <div class="form-group">
-            <label for="descripcion">Descripción:</label>
-            <textarea id="descripcion" name="descripcion" placeholder="Ingrese la descripción del producto"
-                      required autocomplete="off" th:text="${producto.descripcion}"></textarea>
-        </div>
+            <div class="form-group">
+                <label for="cantidad">Cantidad:</label>
+                <input type="number" id="cantidad" name="cantidad" placeholder="Ingrese la cantidad"
+                       required autocomplete="off" th:value="${producto.cantidad}" />
+            </div>
 
-        <div class="form-group">
-            <label for="cantidad">Cantidad:</label>
-            <input type="number" id="cantidad" name="cantidad" placeholder="Ingrese la cantidad"
-                   required autocomplete="off" th:value="${producto.cantidad}" />
-        </div>
+            <div class="form-group">
+                <label for="precio">Precio:</label>
+                <input type="number" step="any" id="precio" name="precio" placeholder="Ingrese el precio"
+                       required autocomplete="off" th:value="${producto.precio}" />
+            </div>
 
-        <div class="form-group">
-            <label for="precio">Precio:</label>
-            <input type="number" step="any" id="precio" name="precio" placeholder="Ingrese el precio"
-                   required autocomplete="off" th:value="${producto.precio}" />
-        </div>
+            <div class="form-actions">
+                <button type="submit" class="btn-guardar">Guardar</button>
+            </div>
+        </form>
+    </div>
 
-        <div class="form-actions">
-            <button type="submit" class="btn btn-success">Guardar</button>
-        </div>
-    </form>
 </main>
 
 <!-- Footer -->

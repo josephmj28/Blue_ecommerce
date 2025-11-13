@@ -2,84 +2,185 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spring eCommerce - Crear Producto</title>
 
-    <!-- Estilos propios -->
-    <link rel="stylesheet" th:href="@{/css/productos.css}">
+    <!-- Estilos -->
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="stylesheet" th:href="@{/css/emprendedor.css}">
     <link rel="stylesheet" th:href="@{/css/admin-base.css}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <style>
+        /* Ajustes visuales extra para el form */
+        .wrapper-blanco {
+
+            background-color: white;
+            max-width: 600px;
+            width: 90%;
+            margin: 10vh auto;
+            padding: 40px 30px;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 25px;
+        }
+
+        *{
+            margin: 0;
+        }
+
+        .titulo h1 {
+            font-size: 2.2rem;
+            text-align: center;
+        }
+
+        form.form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 1rem;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .buttoms {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .buttoms button,
+        .buttoms a {
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            text-align: center;
+            min-width: 120px;
+        }
+
+        .buttoms .yellow {
+            background-color: var(--color-secundario);
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .buttoms .yellow:hover {
+            transform: scale(1.05);
+        }
+
+        .background {
+            background-image: url("/images/bakground.jpg");
+            background-size: cover;
+            background-position: center;
+            min-height: 100vh;
+            padding-top: 7rem; /* espacio para navbar */
+        }
+
+        @media(max-width: 576px){
+            .cuadrado-blanco {
+                padding: 30px 20px;
+            }
+            .titulo h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
 </head>
 
 <body>
+<header>
+    <nav>
+        <div class="logo">
+            <a th:href="@{/productos}">
+                <!-- logo servido desde /static/images/ -->
+                <img th:src="@{/images/Logo (2).png}" alt="logo">
+            </a>
+        </div>
+        <div class="titulo">
+            <h1><span class="yellow">Panel</span> <span class="green">administrador</span></h1>
+        </div>
+        <div class="iconos">
+            <!-- link al login -->
+            <a th:href="@{/login}" class="nav-icon user-icon">
+                <i class="fas fa-user"></i>
+            </a>
+            <button class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+</header>
 
-<!-- Navigation -->
-<nav class="nav">
-    <div class="nav-logo">
-        <a th:href="@{/administrador}">BlueCore</a>
+<section class="background">
+    <div class="wrapper-blanco">
+
+
+        <form class="form" th:action="@{/productos/save}" method="post" enctype="multipart/form-data">
+
+            <div class="titulo">
+                <h1><span class="yellow">Crear</span> <span class="green">Producto</span></h1>
+            </div>
+            <div class="form-group">
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" placeholder="Ingrese el nombre del producto" autocomplete="off" required>
+            </div>
+
+            <div class="form-group">
+                <label for="descripcion">Descripción:</label>
+                <textarea id="descripcion" name="descripcion" placeholder="Ingrese la descripción del producto" required autocomplete="off"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="cantidad">Cantidad:</label>
+                <input type="number" id="cantidad" name="cantidad" placeholder="Ingrese la cantidad del producto" required autocomplete="off">
+            </div>
+
+            <div class="form-group">
+                <label for="precio">Precio:</label>
+                <input type="number" step="any" id="precio" name="precio" placeholder="Ingrese el precio del producto" required autocomplete="off">
+            </div>
+
+            <div class="buttoms">
+                <button type="submit" class="yellow">Guardar</button>
+
+            </div>
+        </form>
+
+
     </div>
-
-
-    <form class="nav-search" method="post" action="#">
-        <input type="search" name="nombre" placeholder="Buscar..." autocomplete="off" />
-        <button type="submit">Buscar</button>
-    </form>
-
-    <div class="nav-dropdown">
-        <button class="dropbtn">ADMIN ▼</button>
-        <div class="dropdown-content">
-            <a th:href="@{/productos}">Productos</a>
-            <a href="#">Cerrar sesión</a>
-
-        </div>
-    </div>
-</nav>
-
-<!-- Contenido -->
-<div class="container">
-    <h1 class="page-title">Spring eCommerce <small>Productos</small></h1>
-
-    <ol class="breadcrumb">
-        <li><a th:href="@{/administrador}">Home</a></li>
-        <li class="active">Crear Productos</li>
-    </ol>
-
-    <h2 class="form-title">Crear Producto</h2>
-
-    <form class="form" th:action="@{/productos/save}" method="post" enctype="multipart/form-data">
-
-        <div class="form-group">
-            <label for="nombre">Nombre:</label>
-            <input type="text" id="nombre" name="nombre" placeholder="Ingrese el nombre del producto" autocomplete="off" required>
-        </div>
-
-        <div class="form-group">
-            <label for="descripcion">Descripción:</label>
-            <textarea id="descripcion" name="descripcion" placeholder="Ingrese la descripción del producto" required autocomplete="off"></textarea>
-        </div>
-
-        <div class="form-group">
-            <label for="cantidad">Cantidad:</label>
-            <input type="number" id="cantidad" name="cantidad" placeholder="Ingrese la cantidad del producto" required autocomplete="off">
-        </div>
-
-        <div class="form-group">
-            <label for="precio">Precio:</label>
-            <input type="number" step="any" id="precio" name="precio" placeholder="Ingrese el precio del producto" required autocomplete="off">
-        </div>
-
-        <div class="form-actions">
-            <button type="submit" class="btn-success">Guardar</button>
-        </div>
-
-    </form>
-</div>
-
-<!-- Footer -->
-
-    <footer class="footer">
-        <p>Copyright &copy; Spring eCommerce 2025</p>
-    </footer>
+</section>
 
 
 </body>

@@ -1,114 +1,176 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spring eCommerce - Productos</title>
+    <title>CRUD Emprendimientos</title>
 
-    <!-- Estilos propios -->
-    <link rel="stylesheet" th:href="@{/css/show.css}">
-    <link rel="stylesheet" th:href="@{/css/admin-base.css}" />
+    <!-- Tus estilos -->
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="stylesheet" th:href="@{/css/emprendedor.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <style>
+        .background {
+            background-image: url("/images/bakground.jpg");
+            background-size: cover;
+            background-position: center;
+            min-height: 100vh;
+            padding-top: 7rem; /* espacio para navbar */
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .cuadrado-blanco {
+            max-width: 900px;
+            width: 95%;
+            padding: 40px;
+            border-radius: 15px;
+            background-color: #fff;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .cuadrado-blanco h1 {
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .buttoms {
+            display: flex;
+            justify-content: flex-start;
+            width: 100%;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+
+        .buttoms a.yellow {
+            background-color: var(--color-secundario);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.2s ease;
+            text-align: center;
+        }
+
+        .buttoms a.yellow:hover {
+            transform: scale(1.05);
+        }
+
+        .tabla-productos {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: center;
+        }
+
+        .tabla-productos th,
+        .tabla-productos td {
+            padding: 12px 15px;
+            border: 1px solid #ccc;
+        }
+
+        .tabla-productos th {
+            background-color: var(--color-primario);
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .tabla-productos td a.yellow {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            color: #fff;
+            text-decoration: none;
+            background-color: var(--color-primario);
+            transition: transform 0.2s ease;
+        }
+
+        .tabla-productos td a.yellow:hover {
+            transform: scale(1.05);
+            background-color: var(--color-secundario);
+        }
+
+        @media(max-width: 768px) {
+            .cuadrado-blanco {
+                padding: 25px;
+            }
+
+            .tabla-productos th, .tabla-productos td {
+                padding: 8px 10px;
+                font-size: 0.9rem;
+            }
+
+            .buttoms {
+                justify-content: center;
+            }
+        }
+    </style>
 </head>
-
 <body>
-
-<div id="fondo-animado"></div>
-
-<!-- Header -->
-<nav class="nav">
-    <div class="nav-logo">
-        <a th:href="@{/administrador}">
-            <img th:src="@{/images/imge.png}" alt="logo">
-
-        </a>
-    </div>
-
-
-    <form class="nav-search" method="post" action="#">
-        <input type="search" name="nombre" placeholder="Buscar..." autocomplete="off" />
-        <button type="submit">Buscar</button>
-    </form>
-
-    <div class="nav-dropdown">
-        <button class="dropbtn">ADMIN ▼</button>
-        <div class="dropdown-content">
-            <a th:href="@{/productos}">Productos</a>
-            <a href="#">Cerrar sesión</a>
-
-        </div>
-    </div>
-</nav>
-
-
-<!-- Contenido principal -->
-<main class="contenido">
-    <h1>Spring eCommerce <small>Productos</small></h1>
-
-    <nav class="breadcrumb">
-        <a th:href="@{/administrador}">Home</a> /
-        <span>Ver Productos</span>
-    </nav>
-
-    <a class="btn btn-primary" th:href="@{/productos/create}">+ Crear Producto</a>
-
-
-    <div class="csv-dropdown">
-        <button class="btn btn-success">Opciones CSV ▼</button>
-        <div class="csv-dropdown-content">
-
-            <!-- Descargar -->
-            <a class="csv-option" th:href="@{/productos/template}">
-                ⬇️ Descargar plantilla
+<header>
+    <nav>
+        <div class="logo">
+            <a th:href="@{/administrador}">
+                <img th:src="@{/images/Logo (2).png}" alt="logo">
             </a>
-
-            <!-- Subir -->
-            <form th:action="@{/productos/upload}" method="post" enctype="multipart/form-data" style="padding:12px 16px;">
-                <input type="file" name="file" id="fileUpload" class="csv-file-input" accept=".csv"/>
-                <label for="fileUpload" class="csv-upload-label">Seleccionar archivo</label>
-                <button type="submit" class="csv-upload-btn">Subir</button>
-            </form>
         </div>
+        <div class="titulo">
+            <h1><span class="yellow">Panel</span> <span class="green">administrador</span></h1>
+        </div>
+        <div class="iconos">
+            <a th:href="@{/login}" class="nav-icon user-icon">
+                <i class="fas fa-user"></i>
+            </a>
+            <button class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+</header>
+
+<section class="background">
+    <div class="cuadrado-blanco">
+        <h1><span class="yellow">Gestión</span> <span class="green">de negocios</span></h1>
+
+        <div class="buttoms">
+            <a class="yellow " th:href="@{/productos/create}">+ Crear negocio</a>
+        </div>
+
+        <table class="tabla-productos">
+            <thead>
+            <tr>
+                <th>Nombre negocio</th>
+                <th>Emprendedor</th>
+                <th>Dirección</th>
+                <th>Teléfono</th>
+                <th colspan="2">Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="producto: ${productos}">
+                <td th:text="${producto.nombre}">Nombre</td>
+                <td th:text="${producto.descripcion}">Emprendedor</td>
+                <td th:text="${producto.cantidad}">Dirección</td>
+                <td th:text="${producto.precio}">Teléfono</td>
+                <td>
+                    <a class="yellow" th:href="@{productos/edit/{id}(id=${producto.id})}">Editar</a>
+                </td>
+                <td>
+                    <a class="yellow" th:href="@{productos/delete/{id}(id=${producto.id})}">Eliminar</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
+</section>
 
-
-    <h2>Listado de Productos</h2>
-
-    <table class="tabla-productos">
-        <thead>
-        <tr>
-            <th>Nombre</th>
-            <th>Descripción</th>
-            <th>Inventario</th>
-            <th>Precio</th>
-            <th colspan="2">Acciones</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="producto : ${productos}">
-            <td th:text="${producto.nombre}"></td>
-            <td th:text="${producto.descripcion}"></td>
-            <td th:text="${producto.cantidad}"></td>
-            <td th:text="${producto.precio}"></td>
-            <td>
-                <a class="btn btn-warning" th:href="@{/productos/edit/{id}(id=${producto.id})}">Editar</a>
-            </td>
-            <td>
-                <a class="btn btn-danger" th:href="@{/productos/delete/{id}(id=${producto.id})}">Eliminar</a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-</main>
-
-<!-- Footer -->
 <div th:include="administrador/template_admin.html::footer"></div>
-
-<script src="/js/vanta-aurora.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/vanta/dist/vanta.fog.min.js"></script>
-<script th:src="@{/js/vanta-aurora.js}"></script>
-
-
 </body>
 </html>
