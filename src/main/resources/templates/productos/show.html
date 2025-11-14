@@ -12,7 +12,7 @@
 
     <style>
         .background {
-            background-image: url("/images/bakground.jpg");
+            background-image: url("/images_desing/bakground.jpg");
             background-size: cover;
             background-position: center;
             min-height: 100vh;
@@ -118,7 +118,7 @@
     <nav>
         <div class="logo">
             <a th:href="@{/administrador}">
-                <img th:src="@{/images/Logo (2).png}" alt="logo">
+                <img th:src="@{/images_desing/Logo (2).png}" alt="logo">
             </a>
         </div>
         <div class="titulo">
@@ -157,7 +157,7 @@
             <tr th:each="producto: ${productos}">
                 <td th:text="${producto.nombre}">Nombre</td>
                 <td th:text="${producto.descripcion}">Emprendedor</td>
-                <td th:text="${producto.cantidad}">Dirección</td>
+                <td th:text="${producto.ubicacion}">Dirección</td>
                 <td th:text="${producto.precio}">Teléfono</td>
                 <td>
                     <a class="yellow" th:href="@{productos/edit/{id}(id=${producto.id})}">Editar</a>

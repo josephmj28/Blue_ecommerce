@@ -59,7 +59,14 @@ public class ProductoController {
         Usuario u = new Usuario(1,"","","","","","","");
         producto.setUsuario(u);
 
+        if (producto.getId()==null){ //cuando se crea un producto
+            String nombreImagen=uploadFileService.saveImage(file);
+            producto.setImagen(nombreImagen);
+        }
 
+        else{
+
+        }
 
         productoService.save(producto);
         return "redirect:/productos";
@@ -136,7 +143,7 @@ public class ProductoController {
                 Producto p = new Producto();
                 p.setNombre(fields[0].trim());
                 p.setDescripcion(fields[1].trim());
-                p.setCantidad(Integer.parseInt(fields[2].trim()));
+                p.setUbicacion(fields[2].trim());
                 p.setPrecio(Double.parseDouble(fields[3].trim()));
 
 

@@ -12,8 +12,10 @@ import jakarta.persistence.*;
         private Integer id;
         private String nombre;
         private String descripcion;
+        private String imagen;
         private Double precio;
-        private int cantidad;
+        private String ubicacion;
+
 
         @ManyToOne
         private Usuario usuario;
@@ -21,12 +23,14 @@ import jakarta.persistence.*;
         public Producto() {
         }
 
-        public Producto(Integer id, String nombre, String descripcion,Double precio, int cantidad, Usuario usuario) {
+        public Producto(Integer id, String nombre, String descripcion, String imagen, Double precio, String ubicacion, Usuario usuario) {
             this.id = id;
             this.nombre = nombre;
             this.descripcion = descripcion;
+            this.imagen = imagen;
             this.precio = precio;
-            this.cantidad = cantidad;
+            this.ubicacion = ubicacion;
+
         }
 
         public Integer getId() {
@@ -62,13 +66,23 @@ import jakarta.persistence.*;
             this.precio = precio;
         }
 
-        public int getCantidad() {
-            return cantidad;
+        public String getUbicacion() {
+            return ubicacion;
         }
 
-        public void setCantidad(int cantidad) {
-            this.cantidad = cantidad;
+        public void setUbicacion(String ubicacion) {
+            this.ubicacion = ubicacion;
         }
+
+        public String getImagen() {
+            return imagen;
+        }
+
+        public void setImagen(String imagen) {
+            this.imagen = imagen;
+        }
+
+
 
         public Usuario getUsuario() {
             return usuario;
@@ -86,7 +100,7 @@ import jakarta.persistence.*;
                     ", nombre='" + nombre + '\'' +
                     ", description='" + descripcion + '\'' +
                     ", precio=" + precio +
-                    ", Cantidad=" + cantidad +
+                    ", Ubicacion=" + ubicacion +
                     '}';
         }
     }

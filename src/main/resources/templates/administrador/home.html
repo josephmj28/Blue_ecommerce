@@ -15,7 +15,7 @@
     <nav>
         <div class="logo">
             <a th:href="@{/administrador}">
-                <img th:src="@{/images/Logo (2).png}" alt="logo">
+                <img th:src="@{/images_desing/Logo (2).png}" alt="logo">
             </a>
         </div>
         <div class="titulo">
@@ -52,6 +52,8 @@
     <div class="productos-panel">
         <div class="carts" th:if="${productos != null}">
             <div class="product-card" th:each="producto:${productos}">
+                <img class="card-img-top"
+                     th:src="@{/images/{img} (img=${producto.imagen})} " alt="">
                 <div class="card-body">
                     <p class="card-text" th:text="${producto.nombre}">Nombre producto</p>
                 </div>
