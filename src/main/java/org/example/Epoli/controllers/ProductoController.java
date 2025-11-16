@@ -106,61 +106,7 @@ public class ProductoController {
     }
 
 
-    @GetMapping("/template")
-    public void descargarTemplate(HttpServletResponse response) throws IOException {
-        response.setContentType("text/csv");
-        response.setHeader("Content-Disposition", "attachment; filename=plantilla.csv");
 
-        PrintWriter writer = response.getWriter();
-        writer.println("id,nombre,descripcion,cantidad,precio"); // encabezados
-        writer.flush();
-        writer.close();
-    }
-
-    @PostMapping("/upload")
-    public String subirCsv(@RequestParam("file") MultipartFile file, Model model) {
-        if (file.isEmpty()) {
-            model.addAttribute("error", "El archivo está vacío");
-            return "productos/show";
-        }
-
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
-            String line;
-            boolean firstLine = true;
-
-            while ((line = br.readLine()) != null) {
-                if (firstLine) { // Saltar cabecera
-                    firstLine = false;
-                    continue;
-                }
-
-                String[] fields = line.split(",");
-                if (fields.length < 4) {
-                    LOGGER.warn("Fila inválida en CSV: {}", Arrays.toString(fields));
-                    continue;
-                }
-
-                Producto p = new Producto();
-                p.setNombre(fields[0].trim());
-                p.setDescripcion(fields[1].trim());
-                p.setUbicacion(fields[2].trim());
-                p.setPrecio(Double.parseDouble(fields[3].trim()));
-
-
-                Usuario u = new Usuario(1,"","","","","","","");
-                p.setUsuario(u);
-
-                LOGGER.info("Guardando producto desde CSV: {}", p);
-
-                productoService.save(p);
-            }
-
-            return "redirect:/productos";
-
-        } catch (Exception e) {
-            model.addAttribute("error", "Error procesando el archivo: " + e.getMessage());
-            return "productos/show";
-        }
     }
 
 
@@ -168,5 +114,5 @@ public class ProductoController {
 
 
 
-}
+
 

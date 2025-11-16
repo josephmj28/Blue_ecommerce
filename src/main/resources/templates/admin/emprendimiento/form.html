@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Negocio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="stylesheet" th:href="@{/css/emprendedor.css}">
+    <link rel="stylesheet" th:href="@{/css/register-negocio.css}">
+</head>
+<body>
+<header>
+    <nav>
+        <div class="logo">
+            <a th:href="@{/home}">
+                <img th:src="@{/images/Logo (2).png}" alt="logo">
+            </a>
+        </div>
+        <div class="titulo">
+            <h1><span class="yellow">Panel</span> <span class="green">Administrador</span></h1>
+        </div>
+    </nav>
+
+    <section class="background">
+        <div class="cuadrado-blanco">
+            <div class="titulo">
+                <h1>Registra tu negocio</h1>
+            </div>
+
+            <!-- Formulario Thymeleaf -->
+            <form th:action="@{/admin/emprendimiento/save}"
+                  th:object="${emprendimiento}"
+                  method="post"
+                  enctype="multipart/form-data">
+
+                <div class="fila-formulario">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" id="nombre" th:field="*{nombre}" required>
+                </div>
+
+                <div class="fila-formulario">
+                    <label for="ubicacion">Ubicación en el poli</label>
+                    <input type="text" id="ubicacion" th:field="*{ubicacion}" required>
+                </div>
+
+                <div class="fila-formulario">
+                    <label for="horario">Horario</label>
+                    <input type="text" id="horario" th:field="*{horario}" required>
+                </div>
+
+                <div class="fila-formulario">
+                    <label for="imagenUrl">Imagen de tu negocio</label>
+                    <input type="file" id="imagenUrl" name="file" accept="image/*">
+                </div>
+
+                <div class="fila-formulario">
+                    <button type="submit" class="btn-agregar-imagen">
+                        <i class="fas fa-plus"></i> Guardar negocio
+                    </button>
+                </div>
+            </form>
+
+            <!-- Botón para ir al CRUD de productos (solo si el emprendimiento ya tiene ID) -->
+            <div class="fila-formulario" th:if="${emprendimiento.id != null}">
+                <a th:href="@{/admin/emprendimiento/{id}/productos(id=${emprendimiento.id})}"
+                   class="btn-agregar-imagen">
+                    <i class="fas fa-plus"></i> Gestionar productos
+                </a>
+            </div>
+
+        </div>
+    </section>
+</header>
+</body>
+</html>

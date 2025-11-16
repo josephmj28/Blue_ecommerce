@@ -25,6 +25,9 @@ public class Usuario {
         @OneToMany(mappedBy = "usuario")
         private List<Orden> ordenes;
 
+    @OneToMany(mappedBy = "owner")
+    private List<Emprendimiento> emprendimientos;
+
         public Usuario() {
         }
 
