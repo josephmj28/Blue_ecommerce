@@ -96,6 +96,13 @@ import jakarta.persistence.*;
             this.usuario = usuario;
         }
 
+        public Emprendimiento getEmprendimiento() {
+            return emprendimiento;
+        }
+        public void setEmprendimiento(Emprendimiento emprendimiento) {
+            this.emprendimiento = emprendimiento;
+        }
+
 
         @Override
         public String toString() {

@@ -147,7 +147,7 @@
     <div class="wrapper-blanco">
 
 
-        <form class="form" th:action="@{/productos/save}" method="post" enctype="multipart/form-data">
+        <form class="form" th:action="@{/productos/save/{emprendimientoId}(emprendimientoId=${emprendimientoId})}" method="post" enctype="multipart/form-data">
 
             <div class="titulo">
                 <h1><span class="yellow">Crear</span> <span class="green">Producto</span></h1>

@@ -30,7 +30,7 @@
             <a href="login.html" class="nav-icon user-icon">
                 <i class="fas fa-user"></i>
             </a>
-            <a href="carrito.html" class="nav-icon cart-icon">
+            <a th:href="@{/getCart}" class="nav-icon cart-icon">
                 <i class="fas fa-shopping-cart"></i>
             </a>
             <button class="menu-toggle">
@@ -73,7 +73,7 @@
                     <p class="product-description" th:text="${producto.descripcion}">Descripción breve del servicio.</p>
                 </div>
                 <div class="card-footer">
-                    <a class="product-btn" th:href="@{/servicios/{id}(id=${producto.id})}">Ver más</a>
+                    <a class="product-btn" th:href="@{/productohome/{id}(id=${producto.id})}">Ver más</a>
                 </div>
             </article>
         </div>

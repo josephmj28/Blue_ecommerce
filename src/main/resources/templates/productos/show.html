@@ -137,10 +137,20 @@
 
 <section class="background">
     <div class="cuadrado-blanco">
-        <h1><span class="yellow">Gestión</span> <span class="green">de negocios</span></h1>
+        <h1>
+            <span class="yellow">Productos</span>
+            <span class="green" th:text="${emprendimiento.nombre}"></span>
+        </h1>
+
+        <div class="info-emprendimiento">
+            <img th:src="@{'/uploads/' + ${emprendimiento.imagenUrl}}" width="120">
+            <h2 th:text="${emprendimiento.nombre}"></h2>
+            <p th:text="${emprendimiento.ubicacion}"></p>
+            <p th:text="${emprendimiento.horario}"></p>
+        </div>
 
         <div class="buttoms">
-            <a class="yellow " th:href="@{/productos/create}">+ Crear negocio</a>
+            <a class="yellow " th:href="@{/productos/create/{id}(id=${emprendimiento.id})}">+ Agregar producto</a>
         </div>
 
         <table class="tabla-productos">
