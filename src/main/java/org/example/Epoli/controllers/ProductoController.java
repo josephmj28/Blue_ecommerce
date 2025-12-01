@@ -1,8 +1,8 @@
 package org.example.Epoli.controllers;
 
-import org.example.Epoli.models.Emprendimiento;
+import jakarta.servlet.http.HttpSession;
 import org.example.Epoli.models.Producto;
-import org.example.Epoli.service.IEmprendimientoService;
+import org.example.Epoli.models.Usuario;
 import org.example.Epoli.service.IProductoService;
 import org.example.Epoli.service.UploadFileService;
 import org.slf4j.Logger;
@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/productos")
@@ -25,97 +26,83 @@ public class ProductoController {
     private IProductoService productoService;
 
     @Autowired
-    private IEmprendimientoService emprendimientoService;
-
-    @Autowired
     private UploadFileService uploadFileService;
 
-    // Mostrar todos los productos (opcional, global)
+    // ===========================
+    // MOSTRAR PRODUCTOS
+    // ===========================
     @GetMapping("")
-    public String showAll(Model model){
+    public String show(Model model){
         model.addAttribute("productos", productoService.findAll());
         return "productos/show";
     }
 
-    // Mostrar productos de un emprendimiento específico
-    @GetMapping("/emprendimiento/{emprendimientoId}")
-    public String showByEmprendimiento(@PathVariable Long emprendimientoId, Model model){
-        Emprendimiento e = emprendimientoService.getById(emprendimientoId).orElseThrow(() -> new IllegalArgumentException("Emprendimiento no encontrado"));
-        model.addAttribute("productos", e.getProductos());
-        model.addAttribute("emprendimiento", e);
-        return "productos/show";
-    }
-
-    // Formulario para crear un producto (ligado a un emprendimiento)
-    @GetMapping("/create/{emprendimientoId}")
-    public String create(@PathVariable Long emprendimientoId, Model model){
-        Producto producto = new Producto();
-        model.addAttribute("producto", producto);
-        model.addAttribute("emprendimientoId", emprendimientoId);
+    // ===========================
+    // FORM CREAR PRODUCTO
+    // ===========================
+    @GetMapping("/create")
+    public String create(){
         return "productos/create";
     }
 
-    // Guardar producto ligado al emprendimiento
-    @PostMapping("/save/{emprendimientoId}")
-    public String save(@PathVariable Long emprendimientoId,
-                       Producto producto,
-                       @RequestParam("file") MultipartFile file) throws IOException {
+    // ===========================
+    // GUARDAR PRODUCTO
+    // ===========================
+    @PostMapping("/save")
+    public String save(Producto producto, MultipartFile file, HttpSession session) throws IOException {
+        LOGGER.info("Guardando producto: {}", producto);
 
-        Emprendimiento e = emprendimientoService.getById(emprendimientoId).orElseThrow(() -> new IllegalArgumentException("Emprendimiento no encontrado"));
-        producto.setEmprendimiento(e);
+        // Usuario fijo temporal (luego se cambia por sesión)
+        Usuario u = new Usuario(1,"","","","","","","");
+        producto.setUsuario(u);
 
-        if (producto.getId() == null && file != null && !file.isEmpty()) {
-            String nombreImagen = uploadFileService.saveImage(file);
-            producto.setImagen(nombreImagen);
-        } else if (file != null && !file.isEmpty()) {
-            // en edición: actualizar imagen si se sube una nueva
+        if (!file.isEmpty()){
             String nombreImagen = uploadFileService.saveImage(file);
             producto.setImagen(nombreImagen);
         }
 
         productoService.save(producto);
-        return "redirect:/productos/emprendimiento/" + emprendimientoId;
+        return "redirect:/productos";
     }
 
-    // Formulario para editar producto (muestra emprendimientoId para redirección)
+    // ===========================
+    // FORM EDITAR PRODUCTO
+    // ===========================
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable Integer id, Model model){
-        Producto producto = productoService.get(id).orElseThrow(() -> new IllegalArgumentException("Producto no encontrado"));
+        Optional<Producto> optionalProducto = productoService.get(id);
+        Producto producto = optionalProducto.get();
+
         model.addAttribute("producto", producto);
-        Long empId = producto.getEmprendimiento() != null ? producto.getEmprendimiento().getId() : null;
-        model.addAttribute("emprendimientoId", empId);
         return "productos/edit";
     }
 
-    // Actualizar producto (recibe id por formulario oculto o path)
-    @PostMapping("/update/{id}")
-    public String update(@PathVariable Integer id,
-                         Producto producto,
-                         @RequestParam("file") MultipartFile file) throws IOException {
+    // ===========================
+    // ACTUALIZAR PRODUCTO
+    // ===========================
+    @PostMapping("/update")
+    public String update(Producto producto, MultipartFile file) throws IOException {
 
-        Producto db = productoService.get(id).orElseThrow(() -> new IllegalArgumentException("Producto no encontrado"));
-        producto.setId(id);
-        producto.setEmprendimiento(db.getEmprendimiento()); // mantener vínculo
+        Producto pDB = productoService.get(producto.getId()).get();
+        producto.setUsuario(pDB.getUsuario());
 
-        if (file != null && !file.isEmpty()) {
+        if (!file.isEmpty()){
             String nombreImagen = uploadFileService.saveImage(file);
             producto.setImagen(nombreImagen);
+        } else {
+            producto.setImagen(pDB.getImagen());
         }
 
         productoService.update(producto);
-        return "redirect:/productos/emprendimiento/" + db.getEmprendimiento().getId();
+        return "redirect:/productos";
     }
 
-    // Eliminar producto y volver al listado del emprendimiento
+    // ===========================
+    // ELIMINAR PRODUCTO
+    // ===========================
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Integer id){
-        Producto p = productoService.get(id).orElseThrow(() -> new IllegalArgumentException("Producto no encontrado"));
-        Long emprendimientoId = p.getEmprendimiento() != null ? p.getEmprendimiento().getId() : null;
         productoService.delete(id);
-        if (emprendimientoId != null) {
-            return "redirect:/productos/emprendimiento/" + emprendimientoId;
-        } else {
-            return "redirect:/productos";
-        }
+        return "redirect:/productos";
     }
 }

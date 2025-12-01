@@ -39,7 +39,7 @@ public class EmprendimientoController {
     @GetMapping("/create")
     public String create(Model model){
         model.addAttribute("emprendimiento", new Emprendimiento());
-        return "admin/emprendimiento/form"; // Tu formulario Thymeleaf
+        return "admin/emprendimiento/form"; //  formulario Thymeleaf
     }
 
     // Guardar nuevo emprendimiento

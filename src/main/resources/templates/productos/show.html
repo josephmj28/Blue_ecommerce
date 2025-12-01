@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CRUD Emprendimientos</title>
+    <title>Gestión de Productos</title>
 
-    <!-- Tus estilos -->
     <link rel="stylesheet" th:href="@{/css/styles.css}">
     <link rel="stylesheet" th:href="@{/css/emprendedor.css}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/admin-base.css}">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
     <style>
         .background {
@@ -16,7 +17,7 @@
             background-size: cover;
             background-position: center;
             min-height: 100vh;
-            padding-top: 7rem; /* espacio para navbar */
+            padding-top: 7rem;
             display: flex;
             justify-content: center;
             align-items: flex-start;
@@ -102,7 +103,8 @@
                 padding: 25px;
             }
 
-            .tabla-productos th, .tabla-productos td {
+            .tabla-productos th,
+            .tabla-productos td {
                 padding: 8px 10px;
                 font-size: 0.9rem;
             }
@@ -113,74 +115,83 @@
         }
     </style>
 </head>
+
 <body>
+
 <header>
     <nav>
         <div class="logo">
-            <a th:href="@{/admin/home}">
+            <a th:href="@{/administrador}">
                 <img th:src="@{/images_desing/Logo (2).png}" alt="logo">
             </a>
         </div>
+
         <div class="titulo">
-            <h1><span class="yellow">Panel</span> <span class="green">administrador</span></h1>
+            <h1><span class="yellow">Panel</span> <span class="green">Administrador</span></h1>
         </div>
+
         <div class="iconos">
             <a th:href="@{/login}" class="nav-icon user-icon">
                 <i class="fas fa-user"></i>
             </a>
-            <button class="menu-toggle">
-                <i class="fas fa-bars"></i>
-            </button>
         </div>
     </nav>
 </header>
 
 <section class="background">
     <div class="cuadrado-blanco">
-        <h1>
-            <span class="yellow">Productos</span>
-            <span class="green" th:text="${emprendimiento.nombre}"></span>
-        </h1>
 
-        <div class="info-emprendimiento">
-            <img th:src="@{'/uploads/' + ${emprendimiento.imagenUrl}}" width="120">
-            <h2 th:text="${emprendimiento.nombre}"></h2>
-            <p th:text="${emprendimiento.ubicacion}"></p>
-            <p th:text="${emprendimiento.horario}"></p>
-        </div>
+        <h1><span class="yellow">Gestión</span> <span class="green">de Productos</span></h1>
 
         <div class="buttoms">
-            <a class="yellow " th:href="@{/productos/create/{id}(id=${emprendimiento.id})}">+ Agregar producto</a>
+            <a class="yellow" th:href="@{/productos/create}">+ Crear producto</a>
         </div>
 
         <table class="tabla-productos">
             <thead>
             <tr>
-                <th>Nombre negocio</th>
-                <th>Emprendedor</th>
-                <th>Dirección</th>
-                <th>Teléfono</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Ubicación</th>
+                <th>Precio</th>
+                <th>Imagen</th>
                 <th colspan="2">Acciones</th>
             </tr>
             </thead>
+
             <tbody>
-            <tr th:each="producto: ${productos}">
+            <tr th:each="producto : ${productos}">
                 <td th:text="${producto.nombre}">Nombre</td>
-                <td th:text="${producto.descripcion}">Emprendedor</td>
-                <td th:text="${producto.ubicacion}">Dirección</td>
-                <td th:text="${producto.precio}">Teléfono</td>
+                <td th:text="${producto.descripcion}">Descripción</td>
+                <td th:text="${producto.ubicacion}">Ubicación</td>
+                <td th:text="${producto.precio}">Precio</td>
+
                 <td>
-                    <a class="yellow" th:href="@{productos/edit/{id}(id=${producto.id})}">Editar</a>
+                    <img th:if="${producto.imagen != null}"
+                         th:src="@{/images/{img}(img=${producto.imagen})}"
+                         style="width: 60px;">
                 </td>
+
                 <td>
-                    <a class="yellow" th:href="@{productos/delete/{id}(id=${producto.id})}">Eliminar</a>
+                    <a class="yellow"
+                       th:href="@{/productos/edit/{id}(id=${producto.id})}">
+                        Editar
+                    </a>
+                </td>
+
+                <td>
+                    <a class="yellow"
+                       th:href="@{/productos/delete/{id}(id=${producto.id})}"
+                       onclick="return confirm('¿Eliminar este producto?')">
+                        Eliminar
+                    </a>
                 </td>
             </tr>
             </tbody>
         </table>
+
     </div>
 </section>
 
-<div th:include="admin/template_admin.html::footer"></div>
 </body>
 </html>
