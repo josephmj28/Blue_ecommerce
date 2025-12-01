@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:action="@{/register}" th:object="${usuario}" method="post">
+    <input type="text" th:field="*{nombre}" placeholder="Nombre" required>
+    <input type="text" th:field="*{username}" placeholder="Usuario" required>
+    <input type="email" th:field="*{email}" placeholder="Email" required>
+    <input type="password" th:field="*{password}" placeholder="Contraseña" required>
+
+    <select name="tipo">
+        <option value="usuario">Usuario</option>
+        <option value="emprendedor">Emprendedor</option>
+    </select>
+
+    <button type="submit">Registrar</button>
+</form>
+
+</body>
+</html>
