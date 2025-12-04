@@ -48,7 +48,15 @@ public class WebSecurityConfig {
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
-                        .defaultSuccessUrl("/administrador", true)
+                        .successHandler((request, response, authentication) -> {
+                            boolean isAdmin = authentication.getAuthorities().stream()
+                                    .anyMatch(a -> a.getAuthority().equals("ADMIN"));
+                            if (isAdmin) {
+                                response.sendRedirect("/administrador");
+                            } else {
+                                response.sendRedirect("/"); // tu página principal para usuarios normales
+                            }
+                        })
                         .permitAll()
                 )
                 .logout(logout -> logout

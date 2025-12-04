@@ -1,0 +1,652 @@
+/* ================================================== */
+/* VARIABLES GLOBALES */
+/* ================================================== */
+:root {
+    --color-primario: #019651; /* Verde Poli (Main) */
+    --color-secundario: #f9d002; /* Amarillo Poli (Accent) */
+    --fondo-gris: #d9d9d9; /* Gris oscuro para secciones */
+    --fondo-gris-claro: #f0f0f0; /* Fondo general para body */
+    --font-family-title: 'Open Sans', sans-serif;
+    --font-family-body: 'Montserrat', sans-serif;
+    --navbar-height: 7rem;
+}
+
+/* ================================================== */
+/* RESET Y BODY */
+/* ================================================== */
+* {
+    box-sizing: border-box;
+    text-decoration: none;
+    transition: all 0.3s ease; /* Transición general para suavizar efectos */
+}
+
+body {
+    font-family: var(--font-family-body);
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    background-color: var(--fondo-gris-claro); /* Fondo muy claro para resaltar tarjetas */
+}
+
+/* ================================================== */
+/* HEADER Y NAVBAR - CORRECCIÓN DE LOGO */
+/* ================================================== */
+header {
+    position: relative;
+}
+
+nav {
+    background: #fff;
+    display: flex;
+    height: var(--navbar-height);
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 9999;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+/* CORRECCIÓN: Tamaño del logo en la navbar */
+.logo img {
+    height: 60px; /* Ajuste ligeramente para una apariencia más compacta */
+    width: auto;
+    transition: transform 0.3s ease;
+}
+
+.logo img:hover {
+    transform: scale(1.05);
+}
+
+/* Omitimos la sección .buscador ya que no se usó en el carrito */
+
+.iconos {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.nav-icon {
+    color: var(--color-primario);
+    font-size: 26px; /* Aumento ligero del tamaño del ícono */
+    text-decoration: none;
+    transform: scale(1);
+}
+
+.nav-icon:hover {
+    color: var(--color-secundario);
+    transform: scale(1.1);
+}
+
+.menu-toggle {
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 26px;
+    color: var(--color-primario);
+    transform: scale(1);
+}
+
+.menu-toggle:hover {
+    color: var(--color-secundario);
+    transform: scale(1.1);
+}
+
+/* Dropdown menu */
+.dropdown-menu {
+    position: fixed;
+    top: var(--navbar-height); /* Se posiciona justo debajo de la navbar */
+    right: 0;
+    width: 250px;
+    background-color: rgba(1, 150, 81, 0.9); /* Opacidad en verde primario */
+    border-radius: 0 0 5px 5px;
+    box-shadow: 0px 4px 8px rgba(0,0,0,0.3);
+    transform: translateX(100%);
+    opacity: 0;
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+    z-index: 9998;
+}
+
+.dropdown-menu.open {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.dropdown-menu ul {
+    list-style: none;
+    padding: 20px;
+    margin: 0;
+}
+
+.dropdown-menu a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 1.1em;
+    display: block;
+    padding: 5px 0;
+}
+
+.dropdown-menu a:hover {
+    color: var(--color-secundario);
+}
+
+
+.main-content-cart {
+    background-image: url("../images_desing/bakground.jpg");
+    background-size: cover;
+    background-position: center 20%;
+    /* Reducimos la altura para que el logo no parezca ocupar todo */
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    padding-top: var(--navbar-height); /* Asegura que no se oculte detrás del navbar */
+}
+
+.hero-wrapper::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 1;
+}
+
+.hero-wrapper > * {
+    position: relative;
+    z-index: 2;
+}
+
+/* CORRECCIÓN: Tamaño del logo en la portada (Hero) */
+.logo-hero img {
+    height: 10rem; /* Mantenemos un tamaño grande, pero lo reducimos un poco */
+    width: auto;
+    border-bottom: 2px solid white;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    display: inline-block;
+}
+
+.hero-title {
+    color: black;
+    font-size: 3.5em; /* Ligeramente más grande */
+    font-weight: bold;
+    font-family: var(--font-family-title);
+    -webkit-text-stroke: 1px white;
+    text-stroke: 1px white;
+    text-shadow:
+            -1px -1px 0 white,
+            1px -1px 0 white,
+            -1px 1px 0 white,
+            1px 1px 0 white;
+}
+
+.green { color: var(--color-primario); }
+.yellow { color: var(--color-secundario); }
+
+/* ================================================== */
+/* PRODUCTOS (Card Style) */
+/* ================================================== */
+.productos-section {
+    padding: 120px 20px 80px 20px;
+    background-color: var(--fondo-gris);
+    position: relative;
+}
+
+.titulo-productos {
+    text-align: center;
+    font-size: 2.8em;
+    margin-bottom: 50px;
+    font-weight: bold;
+    color: black;
+    text-shadow: 1px 1px 2px white;
+}
+
+.productos-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+}
+
+.product-card {
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    width: 300px; /* Tamaño ligeramente mayor */
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-8px); /* Efecto flotante más pronunciado */
+    box-shadow: 0 15px 30px rgba(0,0,0,0.25);
+}
+
+.product-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    margin-bottom: 0;
+    transition: transform 0.3s ease;
+}
+
+.product-card img:hover {
+    transform: scale(1.05);
+}
+
+.card-body {
+    padding: 15px;
+    text-align: center;
+}
+
+.product-title {
+    font-size: 1.3em;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.product-description {
+    font-size: 0.95em;
+    color: #555;
+    min-height: 50px;
+}
+
+.card-footer {
+    padding: 15px;
+    text-align: center;
+    margin-top: auto; /* Empuja el footer hacia abajo */
+}
+
+.product-btn {
+    display: inline-block;
+    padding: 10px 25px; /* Botón un poco más grande */
+    border-radius: 30px;
+    background-color: var(--color-primario);
+    color: #fff;
+    font-weight: 700;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.product-btn:hover {
+    background-color: var(--color-secundario);
+    color: #000;
+    transform: scale(1.05);
+}
+
+/* ================================================== */
+/* NOSOTROS / INFO */
+/* ================================================== */
+.nosotros {
+    background-image: url("../images_desing/background-grafitis.png");
+    background-size: cover;
+    background-position: center;
+    height: 90vh;
+    padding: 60px 20px;
+    position: relative;
+}
+
+.carts {
+    display: flex;
+    justify-content: center;
+    gap: 50px; /* Reducción de gap para mejor vista */
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 2;
+}
+
+.nosotros-wrapper {
+    background-color: rgba(255, 255, 255, 0.95); /* Fondo blanco semitransparente */
+    border-radius: 15px;
+    padding: 30px;
+    width: 400px;
+    margin-top: 50px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.nosotros-wrapper h1 {
+    color: var(--color-primario);
+    font-size: 2em;
+    margin-bottom: 15px;
+}
+
+.nosotros-wrapper span {
+    font-size: 1em;
+    line-height: 1.5;
+    color: #333;
+}
+
+.boton-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 80px;
+}
+
+.boton-wrapper button {
+    border: none;
+    border-radius: 30px;
+    background-color: var(--color-primario);
+    padding: 12px 40px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.boton-wrapper button a {
+    color: #fff;
+    font-size: 1.3em;
+    font-weight: 700;
+}
+
+.boton-wrapper button:hover {
+    background-color: var(--color-secundario);
+}
+
+.boton-wrapper button:hover a {
+    color: #000;
+}
+
+/* ================================================== */
+/* SECCIÓN FINAL */
+/* ================================================== */
+.final-seccion {
+    min-height: 40vh;
+    height: auto; /* Ajuste para contenido */
+    width: 100%;
+    background-color: #fff;
+    padding: 80px 20px;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+}
+
+.titulo-final h1 {
+    font-size: 2.5em;
+    font-weight: 900;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.span-final {
+    font-size: 1.2em;
+    color: #555;
+    margin-bottom: 40px;
+}
+
+/* Estilos de las imágenes flotantes */
+.tag {
+    position: absolute;
+    z-index: 1;
+    opacity: 0.5; /* Suavizamos las imágenes */
+}
+
+.tag img {
+    width: 100px;
+    height: auto;
+}
+
+.tag5 {
+    top: 50%;
+    left: 8%;
+    transform: translate(0, -50%) rotate(-15deg);
+}
+
+.tag6 {
+    top: 30%;
+    right: 3%;
+    transform: rotate(10deg);
+}
+
+/* ================================================== */
+/* FOOTER */
+/* ================================================== */
+footer {
+    background-color: #212529 !important; /* Usar dark grey */
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    font-size: 0.9em;
+}
+
+/* ================================================== */
+/* CARRITO DE COMPRAS (Estilo de la Imagen) */
+/* ================================================== */
+
+/* Contenedor principal con margen superior para el header fijo */
+.main-content-cart {
+    padding-top: 10rem;
+    padding-bottom: 50px;
+    background-color: var(--fondo-gris-claro);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Título de la página estilizado (Tu Carrito de Compras) */
+.cart-title-image {
+    font-size: 3em;
+    font-weight: 900;
+    margin-bottom: 20px;
+    color: #333;
+    text-align: center;
+}
+
+/* Breadcrumb simple y centrado */
+.custom-breadcrumb {
+    margin-bottom: 40px;
+    font-size: 1.1em;
+    text-align: center;
+}
+
+.custom-breadcrumb a {
+    color: var(--color-primario);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.custom-breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+.custom-breadcrumb .active-crumb {
+    font-weight: bold;
+    color: #555;
+}
+
+/* La tarjeta principal que contiene toda la información del carrito */
+.cart-main-card {
+    background-color: #fff;
+    border-radius: 25px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    width: 90%;
+    max-width: 1000px;
+    margin: 30px auto;
+    padding: 0;
+    overflow: hidden;
+}
+
+.section-heading-card {
+    font-size: 1.4em;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 20px;
+    padding: 20px 20px 0 20px;
+}
+
+.cart-table-container {
+    padding-right: 0;
+    border-right: 1px solid var(--fondo-gris);
+}
+
+/* Tabla de Productos - Encabezado Sólido Verde */
+.cart-table thead th {
+    background-color: var(--color-primario);
+    color: #fff;
+    border: none;
+    font-weight: 600;
+    vertical-align: middle;
+    padding: 10px;
+}
+
+.cart-table tbody tr td {
+    border-top: 1px solid var(--fondo-gris);
+    padding: 15px 10px;
+}
+
+.cart-table tbody tr:first-child td {
+    border-top: none;
+}
+
+.product-btn-danger {
+    padding: 3px 12px;
+    font-size: 0.9em;
+    /* Estilo del botón "Quitar" */
+    background-color: #dc3545;
+    border-radius: 5px;
+    color: white;
+}
+.product-btn-danger:hover {
+    background-color: #c82333;
+    color: white;
+    text-decoration: none;
+}
+
+
+/* Tarjeta de Resumen (Summary Card) - Estilo Gris */
+.summary-card-image {
+    background-color: var(--fondo-gris);
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.summary-title-image {
+    font-size: 1.2em;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.summary-title-image span {
+    display: block;
+    font-size: 1.8em;
+    font-weight: 700;
+    color: #333;
+    margin-top: 5px;
+}
+
+.summary-total-final-image {
+    margin: 20px 0 30px 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #aaa;
+}
+
+.summary-total-final-image span {
+    font-size: 1.1em;
+    color: #333;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.summary-total-final-image h3 {
+    font-size: 2.5em;
+    color: var(--color-secundario);
+    -webkit-text-stroke: 1px #333;
+    text-stroke: 1px #333;
+    font-weight: 900;
+    margin: 0;
+}
+
+/* Botón Ver Orden (similar al .product-btn, pero más ancho y fuerte) */
+.primary-btn-full-image {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 30px;
+    border-radius: 25px;
+    background-color: var(--color-primario);
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.1em;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    text-decoration: none;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.primary-btn-full-image:hover {
+    background-color: var(--color-secundario);
+    color: black;
+    transform: scale(1.05);
+}
+
+/* ================================================== */
+/* MEDIA QUERIES (Responsividad) */
+/* ================================================== */
+
+/* Ajustes para tabletas y móviles */
+@media (max-width: 991px) {
+    /* Navbar */
+    nav {
+        height: 6rem;
+    }
+    .hero-title {
+        font-size: 2.5em;
+    }
+
+    /* Productos */
+    .productos-section {
+        padding-top: 80px;
+    }
+    .titulo-productos {
+        font-size: 2em;
+    }
+
+    /* Carrito */
+    .cart-main-card {
+        width: 100%;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    .cart-table-container {
+        border-right: none;
+        border-bottom: 1px solid var(--fondo-gris);
+    }
+    .summary-card-image {
+        padding: 20px;
+    }
+}
+
+/* Ajustes solo para móviles pequeños */
+@media (max-width: 576px) {
+    .hero-title {
+        font-size: 2em;
+        text-align: center;
+    }
+    .productos-grid {
+        gap: 20px;
+    }
+    .product-card {
+        width: 100%;
+    }
+    .cart-title-image {
+        font-size: 2.5em;
+    }
+}

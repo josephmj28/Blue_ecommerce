@@ -39,9 +39,10 @@
         <div class="bienvenida">
             <h2>
                 <span class="yellow">¡Bienvenido</span>
-                <span class="green" th:text="${emprendedor != null ? emprendedor.nombre : 'Nombre-Emprendedor'}">Nombre-Emprendedor</span>
+
             </h2>
-            <p th:text="${emprendimiento != null ? emprendimiento.nombreNegocio : 'Nombre_Negocio'}">Nombre_Negocio</p>
+
+
         </div>
         <div class="boton-gestionar">
             <a class="yellow-a" th:href="@{/productos}">Gestionar negocio</a>

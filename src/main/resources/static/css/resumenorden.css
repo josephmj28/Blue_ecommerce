@@ -1,0 +1,105 @@
+
+.order-summary-card {
+
+    background-color: #fff;
+    border-radius: 25px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    width: 90%;
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 0;
+    overflow: hidden;
+}
+
+/* Columna de Detalles (Datos y Productos) */
+.order-details-col {
+    padding: 30px;
+}
+
+.section-title-summary {
+    font-size: 1.5em;
+    font-weight: 800;
+    margin-top: 20px;
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+    border-bottom: 2px solid var(--fondo-gris);
+}
+
+.section-title-summary.green { color: var(--color-primario); }
+.section-title-summary.yellow { color: var(--color-secundario); }
+
+
+/* Estilo para la lista de Datos de Usuario */
+.user-data-list p {
+    font-size: 1.05em;
+    margin-bottom: 8px;
+    padding: 5px 0;
+}
+
+.user-data-list strong {
+    color: var(--color-primario);
+    font-weight: 700;
+    margin-right: 5px;
+}
+
+/* Tabla de Productos dentro del resumen */
+.order-table {
+    margin-top: 20px;
+}
+
+.order-table thead th {
+    /* Mantiene el encabezado verde del carrito */
+    background-color: var(--color-primario);
+    color: #fff;
+    border: none;
+    padding: 10px;
+}
+
+.order-table tbody td {
+    padding: 12px 10px;
+    vertical-align: middle;
+}
+
+/* Columna de Resumen Total */
+.order-total-col {
+    /* Usa el estilo de tarjeta lateral gris del carrito */
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Media Query para móvil: apilar y limpiar bordes */
+@media (min-width: 992px) {
+    .order-details-col {
+        border-right: 1px solid var(--fondo-gris); /* Separador visual en PC */
+    }
+}
+
+@media (max-width: 991px) {
+    .order-details-col {
+        padding-bottom: 10px;
+        border-bottom: 1px solid var(--fondo-gris); /* Separador visual en móvil */
+    }
+    .order-total-col {
+        padding-top: 30px;
+    }
+}
+
+.main-content-product{
+    background-image: url("../images_desing/bakground.jpg");
+
+    background-size: cover;
+    background-position: center 20%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.custom-breadcrumb{
+    padding-top: 30px;
+}

@@ -1,0 +1,126 @@
+/* ================================================== */
+/* AUTENTICACIÓN (LOGIN/REGISTER) */
+/* ================================================== */
+
+/* Contenedor principal para centrar la tarjeta */
+.main-content-form {
+    padding-top: 10rem;
+    padding-bottom: 80px;
+    background-image: url("../images_desing/background_login.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Centra verticalmente cuando hay poco contenido */
+    flex-grow: 1; /* Necesario para el Sticky Footer */
+    width: 100%;
+    padding-left: 46rem;
+}
+
+/* Tarjeta de Login/Registro */
+.auth-card-wrapper {
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    padding: 40px;
+    width: 100%;
+    max-width: 450px; /* Ancho máximo para el formulario */
+    text-align: center;
+
+}
+
+.auth-title {
+    font-size: 2.5em;
+    font-weight: 900;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.auth-subtitle {
+    font-size: 1.1em;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+/* Estilos del Formulario */
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-group {
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.form-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-secundario); /* Íconos en amarillo */
+    font-size: 1.1em;
+    z-index: 2;
+}
+
+.form-control-poli {
+    width: 100%;
+    padding: 12px 15px 12px 45px; /* Padding extra a la izquierda para el ícono */
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    font-size: 1em;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-control-poli:focus {
+    border-color: var(--color-primario);
+    box-shadow: 0 0 5px rgba(1, 150, 81, 0.3);
+}
+
+/* Estilo para el select */
+.select-group .form-control-poli {
+    appearance: none; /* Oculta el estilo nativo */
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23019651%22%20d%3D%22M287%2069.1l-115%20115c-4%204-10%204-14%200l-115-115c-4-4-4-10%200-14l28-28c4-4%2010-4%2014%200l86%2086%2086-86c4-4%2010-4%2014%200l28%2028c4%204%204%2010%200%2014z%22%2F%3E%3C%2Fsvg%3E');
+    background-repeat: no-repeat;
+    background-position: right 15px top 50%;
+    background-size: 12px;
+}
+
+
+/* Botón de Autenticación */
+.auth-btn {
+    width: 100%;
+    margin-top: 10px;
+    /* Reutiliza el estilo primario del carrito */
+}
+
+.auth-link-text {
+    margin-top: 20px;
+    color: #555;
+}
+
+.green-link {
+    color: var(--color-primario);
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.green-link:hover {
+    color: var(--color-secundario);
+    text-decoration: underline;
+}
+
+/* Media Query para móvil */
+@media (max-width: 576px) {
+    .auth-card-wrapper {
+        padding: 30px 20px;
+        margin: 20px;
+    }
+    .auth-title {
+        font-size: 2em;
+    }
+}
